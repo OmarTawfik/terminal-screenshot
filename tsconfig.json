@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "./out",
+    "baseUrl": ".",
+    "target": "ESNext",
+    "declaration": true,
+    "declarationMap": true,
+    "module": "CommonJS",
+    "lib": ["esnext", "dom"],
+    "allowJs": false,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "types": ["jest", "node"],
+    "esModuleInterop": true,
+    "skipLibCheck": false,
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true
+  },
+  "exclude": ["**/node_modules", "**/out"]
+}
