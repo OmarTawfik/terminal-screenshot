@@ -1,0 +1,53 @@
+import puppeteer from "puppeteer";
+import url from "url";
+import {unlink} from "fs-extra";
+import {generateTemplate} from "./template";
+import joi from "joi";
+import {TerminalScreenshotOptions, TerminalScreenshotOptionsSchema} from "./options";
+
+export {TerminalScreenshotOptions} from "./options";
+
+export async function renderScreenshot(options: Partial<TerminalScreenshotOptions>): Promise<Buffer> {
+  const validatedOtions: TerminalScreenshotOptions = joi.attempt(options, TerminalScreenshotOptionsSchema);
+
+  const templatePath = await generateTemplate(validatedOtions);
+  const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
+
+  try {
+    const page = await browser.newPage();
+    await page.goto(url.pathToFileURL(templatePath).toString());
+
+    await page.waitForSelector(".xterm-text-layer");
+    const {width, height} = await page.evaluate(async () => {
+      const boundingRect = document.getElementsByClassName("xterm-text-layer").item(0)!.getBoundingClientRect();
+      return {
+        height: boundingRect.height,
+        width: boundingRect.width,
+      };
+    });
+
+    const buffer = await page.screenshot({
+      clip: {
+        x: 0,
+        y: 0,
+        height: height + validatedOtions.margin * 2,
+        width: width + validatedOtions.margin * 2,
+      },
+      type: validatedOtions.type,
+    });
+
+    if (!Buffer.isBuffer(buffer)) {
+      throw new Error("Expected a buffer out of puppeteer.");
+    }
+
+    return buffer;
+  } finally {
+    await Promise.all([
+      // clean up
+      unlink(templatePath),
+      browser.close(),
+    ]);
+  }
+}
