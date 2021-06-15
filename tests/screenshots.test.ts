@@ -46,7 +46,10 @@ defineTest("emojis", {
 });
 
 function defineTest(id: string, options: Partial<TerminalScreenshotOptions>): void {
-  it.concurrent(`can render ${id}`, async () => {
+  // Skip rendering in CI (puppeteer screenshots are not cross platform)
+  const factory = process.env.CI ? it.skip : it.concurrent;
+
+  factory(`can render ${id}`, async () => {
     const buffer = await renderScreenshot(options as TerminalScreenshotOptions);
 
     expect(buffer).toMatchImageSnapshot({
