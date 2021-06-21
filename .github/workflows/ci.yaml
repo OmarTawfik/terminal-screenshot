@@ -1,12 +1,9 @@
 on:
   push:
-    branches: [main, dev]
   pull_request:
-    branches: [main, dev]
 
 jobs:
   build:
-    name: Run Linters
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,3 +12,7 @@ jobs:
           node-version: 16
       - run: yarn --frozen-lockfile
       - run: yarn lint
+      - run: yarn semantic-release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
