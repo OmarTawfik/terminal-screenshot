@@ -12,7 +12,7 @@ jobs:
         with:
           node-version: 16
       - run: yarn --frozen-lockfile
-      - run: yarn semantic-release --dry-run
+      - run: yarn semantic-release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
