@@ -1,7 +1,7 @@
 {
   "name": "terminal-screenshot",
   "description": "Render terminal ANSI output into images!",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": false,
   "repository": "https://github.com/OmarTawfik/terminal-screenshot",
   "author": "Omar Tawfik <15987992+OmarTawfik@users.noreply.github.com>",
