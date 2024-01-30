@@ -11,7 +11,9 @@
     "terminal-screenshot": "out/src/cli.js"
   },
   "scripts": {
-    "lint": "jest && prettier . --list-different && tsc"
+    "lint": "prettier . --list-different",
+    "build": "tsc",
+    "test": "jest"
   },
   "commitlint": {
     "extends": [
