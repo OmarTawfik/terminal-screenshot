@@ -1,17 +1,15 @@
 {
-    "root": true,
-    "parser": "@typescript-eslint/parser",
-    "plugins": [
-        "@typescript-eslint"
-    ],
-    "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended"
-    ],
-    "rules": {
-        "no-console": "error",
-        "@typescript-eslint/naming-convention": "error",
-        "@typescript-eslint/ban-ts-comment": "warn"
-    }
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+  ],
+  "rules": {
+    "no-console": "error",
+    "@typescript-eslint/naming-convention": "error",
+    "@typescript-eslint/ban-ts-comment": "warn",
+  },
 }
