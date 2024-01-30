@@ -28,7 +28,7 @@ const options = new Command("terminal-screenshot")
   try {
     const buffer = await renderScreenshot({
       data: options.data || (await getStdinData()),
-      margin: options.margin ? parseInt(options.margin) : (undefined as any),
+      margin: options.margin ? parseInt(options.margin) : undefined,
       fontFamily: options.fontFamily,
       backgroundColor: options.backgroundColor,
       type: options.type,
@@ -36,7 +36,10 @@ const options = new Command("terminal-screenshot")
 
     await writeFile(options.output, buffer);
   } catch (error) {
-    console.error("Error: " + error.message);
+    if (error instanceof Error) {
+      // eslint-disable-next-line no-console
+      console.error("Error: " + error.message);
+    }
     process.exit(1);
   }
 })();

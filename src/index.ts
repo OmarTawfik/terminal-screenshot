@@ -12,6 +12,7 @@ export async function renderScreenshot(options: Partial<TerminalScreenshotOption
 
   const templatePath = await generateTemplate(validatedOtions);
   const browser = await puppeteer.launch({
+    headless: "new",
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
 
