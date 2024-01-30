@@ -12,6 +12,8 @@ jobs:
           node-version: 16
       - run: yarn --frozen-lockfile
       - run: yarn lint
+      - run: yarn compile
+      - run: yarn test
       - run: yarn semantic-release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
