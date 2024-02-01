@@ -2,7 +2,7 @@
 
 Render terminal ANSI output into images!
 
-Under the hood, it uses [XTerm.js](https://www.npmjs.com/package/xterm) to render the terminal output to html, and [Puppeteer](https://www.npmjs.com/package/puppeteer) to capture a screenshot of the page.
+Under the hood, it uses [XTerm.js](https://www.npmjs.com/package/xterm) to render the terminal output to HTML, and [Puppeteer](https://www.npmjs.com/package/puppeteer) to capture a screenshot of the page.
 
 ## Usage (API)
 
@@ -15,6 +15,7 @@ const image = await renderScreenshot({
   fontFamily: "Monaco", // Font family to use in terminal output. (default: Monaco)
   backgroundColor: "black", // Background color of the terminal. (default: black)
   type: "png", // Type of the screenshot to be generated. (default: png)
+  colorScheme: "Tomorrow_Night", // colorScheme from https://github.com/ysk2014/xterm-theme/
 });
 
 await fs.writeFile(destination, image);
@@ -35,14 +36,15 @@ terminal-screenshot --help
 
 ## CLI Options
 
-```
-  -d, --data [string]                Data to be render to the terminal.
-  -m --margin [number]               Margin to leave around the terminal area in pixels. (default: 0)
-  -f --font-family [string]          Font family to use in terminal output. (default: Monaco)
-  -b --background-color [css-color]  Background color of the terminal. (default: black)
-  -t --type [png|jpeg]               Type of the screenshot to be generated. (default: png)
-  -o --output [path]                 Output path to save the screenshot to.
-  -h, --help                         display usage help.
+```text
+-d --data [string]                Data to be render to the terminal.
+-m --margin [number]              Margin to leave around the terminal area in pixels. (default: 0)
+-f --font-family [string]         Font family to use in terminal output. (default: Monaco)
+-b --background-color [css-color] Background color of the terminal. (default: black)
+-t --type [png|jpeg]              Type of the screenshot to be generated. (default: png)
+-c --color-scheme [string]        Color scheme of the terminal, i.e. theme. (default: Tomorrow_Night)
+-o --output [path]                Output path to save the screenshot to.
+-h --help                         Display usage help.
 ```
 
 ## Examples

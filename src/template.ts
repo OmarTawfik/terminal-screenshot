@@ -1,6 +1,7 @@
 import {mkdirp, writeFile} from "fs-extra";
-import path from "path";
 import os from "os";
+import path from "path";
+import themes from "xterm-theme";
 import {TerminalScreenshotOptions} from "./options";
 
 export async function generateTemplate(options: TerminalScreenshotOptions): Promise<string> {
@@ -38,7 +39,7 @@ export async function generateTemplate(options: TerminalScreenshotOptions): Prom
         <script>
             document.fonts.load('1rem "${options.fontFamily}"').then(() => {
                 const terminal = new Terminal({
-                    theme: {background: "${options.backgroundColor}"},
+                    theme: ${JSON.stringify(themes[options.colorScheme])},
                     fontFamily: "${options.fontFamily}",
                     rows: ${terminalRows},
                     cols: ${terminalColumns},

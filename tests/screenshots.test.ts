@@ -1,9 +1,9 @@
-import {renderScreenshot} from "../src/index";
-import {TerminalScreenshotOptions} from "../src/options";
-import path from "path";
-import os from "os";
 import chalk from "chalk";
 import {toMatchImageSnapshot} from "jest-image-snapshot";
+import os from "os";
+import path from "path";
+import {renderScreenshot} from "../src/index";
+import {TerminalScreenshotOptions} from "../src/options";
 
 const colors = new chalk.Instance({
   // full color support
@@ -39,6 +39,11 @@ function light(...parts: string[]): string {
 function dark(...parts: string[]): string {
   return colors.bgHex("#000").hex("#FFF")(parts.join(""));
 }
+
+defineTest("colorScheme", {
+  data: colors.cyan("INFO:") + colors.gray(" using a light theme!"),
+  colorScheme: "Tomorrow",
+});
 
 function defineTest(id: string, options: Partial<TerminalScreenshotOptions>): void {
   it.concurrent(id, async () => {
