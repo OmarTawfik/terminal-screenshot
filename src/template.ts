@@ -9,6 +9,9 @@ export async function generateTemplate(options: TerminalScreenshotOptions): Prom
   const terminalRows = lines.length;
   const terminalColumns = Math.max(...lines.map(measureLength));
 
+  const theme = options.colorScheme
+    ? JSON.stringify(themes[options.colorScheme])
+    : {background: options.backgroundColor};
   const template = `
     <!DOCTYPE html>
     <html>
@@ -39,7 +42,7 @@ export async function generateTemplate(options: TerminalScreenshotOptions): Prom
         <script>
             document.fonts.load('1rem "${options.fontFamily}"').then(() => {
                 const terminal = new Terminal({
-                    theme: ${JSON.stringify(themes[options.colorScheme])},
+                    theme: ${theme},
                     fontFamily: "${options.fontFamily}",
                     rows: ${terminalRows},
                     cols: ${terminalColumns},
