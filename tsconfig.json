@@ -19,7 +19,7 @@
     "esModuleInterop": true,
     "skipLibCheck": false,
     "forceConsistentCasingInFileNames": true,
-    "sourceMap": true,
+    "sourceMap": true
   },
-  "exclude": ["**/node_modules", "**/out"],
+  "exclude": ["**/node_modules", "**/out"]
 }
