@@ -39,6 +39,9 @@ const options = new Command("terminal-screenshot")
     if (error instanceof Error) {
       // eslint-disable-next-line no-console
       console.error("Error: " + error.message);
+    } else {
+      // eslint-disable-next-line no-console
+      console.error(error);
     }
     process.exit(1);
   }
