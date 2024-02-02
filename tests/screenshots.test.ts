@@ -14,49 +14,50 @@ beforeAll(() => {
   expect.extend({toMatchImageSnapshot});
 });
 
-defineTest("error-message", {
-  data: colors.red("ERROR:") + colors.gray(" something went wrong!!!"),
+defineTest("background-dark", {
+  data: dark("this is a ", colors.bgHex("#0A0")(" green "), " background."),
 });
 
-defineTest("white-background", {
-  data: colors.red("ERROR:") + colors.gray(" something went wrong!!!"),
-  backgroundColor: "white",
+defineTest("background-light", {
+  data: light("this is a ", colors.bgHex("#0F0")(" green "), " background."),
 });
 
-defineTest("custom-background", {
-  data: "this is a " + colors.bgCyan.black(" different ") + " background.",
-});
-
-defineTest("custom-margin", {
-  data: chalk.bgHex("black")("margin around me!"),
+defineTest("margin", {
+  data: dark("margin around me!"),
   margin: 10,
-  backgroundColor: "white",
+  backgroundColor: "#FFF",
 });
 
-defineTest("emojis", {
-  data: [
-    colors.blueBright(`Emojis:`),
-    "",
-    `* taking a screenshot 📸`,
-    `* saving an image 💾`,
-    `* running a test 🧪`,
-    "",
-    colors.greenBright("Test is complete."),
-  ].join("\r\n"),
-});
+/*
+ * Utils:
+ */
+
+function light(...parts: string[]): string {
+  return colors.bgHex("#FFF").hex("#000")(parts.join(""));
+}
+
+function dark(...parts: string[]): string {
+  return colors.bgHex("#000").hex("#FFF")(parts.join(""));
+}
 
 function defineTest(id: string, options: Partial<TerminalScreenshotOptions>): void {
-  // Skip rendering in CI (puppeteer screenshots are not cross platform)
-  const factory = process.env.CI ? it.skip : it.concurrent;
-
-  factory(`can render ${id}`, async () => {
-    const buffer = await renderScreenshot(options as TerminalScreenshotOptions);
+  it.concurrent(id, async () => {
+    const buffer = await renderScreenshot({
+      fontFamily: "Courier",
+      ...options,
+    });
 
     expect(buffer).toMatchImageSnapshot({
-      failureThreshold: 0,
       customSnapshotsDir: path.join(__dirname, "screenshots"),
       customSnapshotIdentifier: id,
-      customDiffDir: os.tmpdir(),
+
+      // Allow a margin of error, as this is just an e2e test to verify we load/render successfully.
+      // But we should not fail for minor font differences between platforms:
+      failureThreshold: 25,
+      failureThresholdType: "percent",
+
+      diffDirection: "vertical",
+      customDiffDir: path.join(os.tmpdir(), "terminal-screenshot-tests"), // __SCREENSHOT_TEST_FAILURES_DIR__
     });
   });
 }
