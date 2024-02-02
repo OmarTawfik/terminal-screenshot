@@ -2,6 +2,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: "write" # to create new tags and releases
+
 jobs:
   build:
     runs-on: "ubuntu-latest"
