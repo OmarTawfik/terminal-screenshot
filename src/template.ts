@@ -73,5 +73,5 @@ function measureLength(data: string): number {
     "(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))",
   ].join("|");
 
-  return data.replace(new RegExp(pattern, "g"), "").length;
+  return data.replaceAll(new RegExp(pattern, "g"), "").length;
 }
