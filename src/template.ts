@@ -23,9 +23,6 @@ export async function generateTemplate(options: TerminalScreenshotOptions): Prom
             #terminal {
                 font-smooth: never;
             }
-            .xterm-cursor {
-                display: none !important;
-            }
         </style>
 
         <link rel="stylesheet" href="${require.resolve(`xterm/css/xterm.css`)}" />
@@ -45,6 +42,7 @@ export async function generateTemplate(options: TerminalScreenshotOptions): Prom
                     fontFamily: "${options.fontFamily}",
                     rows: ${terminalRows},
                     cols: ${terminalColumns},
+                    cursorInactiveStyle: "none",
                 });
 
                 terminal.open(document.getElementById("terminal"));

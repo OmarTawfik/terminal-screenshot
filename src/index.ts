@@ -20,9 +20,9 @@ export async function renderScreenshot(options: Partial<TerminalScreenshotOption
     const page = await browser.newPage();
     await page.goto(url.pathToFileURL(templatePath).toString());
 
-    await page.waitForSelector(".xterm-text-layer");
+    await page.waitForSelector(".xterm-screen");
     const {width, height} = await page.evaluate(async () => {
-      const boundingRect = document.getElementsByClassName("xterm-text-layer").item(0)!.getBoundingClientRect();
+      const boundingRect = document.getElementsByClassName("xterm-screen").item(0)!.getBoundingClientRect();
       return {
         height: boundingRect.height,
         width: boundingRect.width,
