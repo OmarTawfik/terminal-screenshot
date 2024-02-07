@@ -13,7 +13,7 @@ export interface TerminalScreenshotOptions {
   readonly type: "png" | "jpeg";
 }
 
-export const TerminalScreenshotOptionsSchema = joi.object({
+export const terminalScreenshotOptionsSchema = joi.object({
   data: joi.string().required().min(1),
   margin: joi.number().min(1).max(10000).default(0),
   fontFamily: joi.string().min(1).default("Monaco"),

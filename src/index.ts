@@ -3,15 +3,16 @@ import url from "url";
 import {unlink} from "fs-extra";
 import {generateTemplate} from "./template";
 import joi from "joi";
-import {TerminalScreenshotOptions, TerminalScreenshotOptionsSchema} from "./options";
+import {TerminalScreenshotOptions, terminalScreenshotOptionsSchema} from "./options";
 
 export {TerminalScreenshotOptions} from "./options";
 
 export async function renderScreenshot(options: Partial<TerminalScreenshotOptions>): Promise<Buffer> {
-  const validatedOtions: TerminalScreenshotOptions = joi.attempt(options, TerminalScreenshotOptionsSchema);
+  const validatedOtions: TerminalScreenshotOptions = joi.attempt(options, terminalScreenshotOptionsSchema);
 
   const templatePath = await generateTemplate(validatedOtions);
   const browser = await puppeteer.launch({
+    headless: "new",
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
 
