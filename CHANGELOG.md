@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/OmarTawfik/terminal-screenshot/compare/v1.0.1...v1.1.0) (2024-02-07)
+
+
+### Features
+
+* migrate to xterm.js 5.3.0 ([#10](https://github.com/OmarTawfik/terminal-screenshot/issues/10)) ([9eba257](https://github.com/OmarTawfik/terminal-screenshot/commit/9eba257b19b26519c4a79e8c13df4c92ff17e82e)), closes [/github.com/puppeteer/puppeteer/issues/8166#issuecomment-1704367760](https://github.com//github.com/puppeteer/puppeteer/issues/8166/issues/issuecomment-1704367760)
+
 ## [1.0.1](https://github.com/OmarTawfik/terminal-screenshot/compare/v1.0.0...v1.0.1) (2024-02-02)
 
 
