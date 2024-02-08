@@ -33,7 +33,7 @@ const options = new Command("terminal-screenshot")
       fontFamily: options.fontFamily,
       backgroundColor: options.backgroundColor,
       type: options.type,
-      colorScheme: options.colorScheme,
+      theme: options.theme,
     });
 
     await writeFile(options.output, buffer);

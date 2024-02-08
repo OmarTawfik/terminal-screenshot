@@ -1,6 +1,5 @@
 import {renderScreenshot} from "../src";
 import {TerminalScreenshotOptions} from "../src/options";
-import themes from "xterm-theme";
 
 defineTest("missing data", {}, `"data" is required`);
 
@@ -10,8 +9,7 @@ defineTest("maximum margin", {data: "test", margin: 10000000}, `"margin" must be
 
 defineTest("invalid type", {data: "test", type: "foo"}, `"type" must be one of [png, jpeg]`);
 
-const themesNames = Object.keys(themes).join(", ");
-defineTest("invalid type", {data: "test", colorScheme: "bar"}, `"colorScheme" must be one of [${themesNames}]`);
+defineTest("invalid type", {data: "test", theme: ""}, `"theme" must be of type object`);
 
 function defineTest(id: string, object: unknown, error: string): void {
   it("validates " + id, async () => {

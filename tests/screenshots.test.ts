@@ -4,6 +4,7 @@ import os from "os";
 import path from "path";
 import {renderScreenshot} from "../src/index";
 import {TerminalScreenshotOptions} from "../src/options";
+import ayu from "./ayu-theme";
 
 const colors = new chalk.Instance({
   // full color support
@@ -40,9 +41,9 @@ function dark(...parts: string[]): string {
   return colors.bgHex("#000").hex("#FFF")(parts.join(""));
 }
 
-defineTest("colorScheme", {
+defineTest("theme", {
   data: colors.cyan("INFO:") + colors.gray(" using a light theme!"),
-  colorScheme: "Tomorrow",
+  theme: ayu,
 });
 
 function defineTest(id: string, options: Partial<TerminalScreenshotOptions>): void {
