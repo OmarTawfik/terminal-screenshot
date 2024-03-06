@@ -8,9 +8,9 @@ import {TerminalScreenshotOptions, terminalScreenshotOptionsSchema} from "./opti
 export {TerminalScreenshotOptions} from "./options";
 
 export async function renderScreenshot(options: Partial<TerminalScreenshotOptions>): Promise<Buffer> {
-  const validatedOtions: TerminalScreenshotOptions = joi.attempt(options, terminalScreenshotOptionsSchema);
+  const validatedOptions: TerminalScreenshotOptions = joi.attempt(options, terminalScreenshotOptionsSchema);
 
-  const templatePath = await generateTemplate(validatedOtions);
+  const templatePath = await generateTemplate(validatedOptions);
   const browser = await puppeteer.launch({
     headless: "new",
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
@@ -33,10 +33,10 @@ export async function renderScreenshot(options: Partial<TerminalScreenshotOption
       clip: {
         x: 0,
         y: 0,
-        height: height + validatedOtions.margin * 2,
-        width: width + validatedOtions.margin * 2,
+        height: height + validatedOptions.margin * 2,
+        width: width + validatedOptions.margin * 2,
       },
-      type: validatedOtions.type,
+      type: validatedOptions.type,
     });
 
     if (!Buffer.isBuffer(buffer)) {
