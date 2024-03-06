@@ -1,12 +1,26 @@
 import {mkdirp, writeFile} from "fs-extra";
-import path from "path";
 import os from "os";
+import path from "path";
+import {ITheme} from "xterm";
 import {TerminalScreenshotOptions} from "./options";
 
 export async function generateTemplate(options: TerminalScreenshotOptions): Promise<string> {
   const lines = options.data.split(/\r?\n/);
   const terminalRows = lines.length;
   const terminalColumns = Math.max(...lines.map(measureLength));
+
+  let colorScheme: ITheme = {};
+  if (options.colorScheme) {
+    try {
+      colorScheme = path.isAbsolute(options.colorScheme.toString())
+        ? require(options.colorScheme.toString())
+        : require(path.resolve(options.colorScheme.toString()));
+    } catch (error) {
+      throw new Error(`Failed to load colorScheme from ${options.colorScheme}: ${(error as Error).message}`);
+    }
+  } else {
+    colorScheme = {background: options.backgroundColor};
+  }
 
   const template = `
     <!DOCTYPE html>
@@ -38,7 +52,7 @@ export async function generateTemplate(options: TerminalScreenshotOptions): Prom
         <script>
             document.fonts.load('1rem "${options.fontFamily}"').then(() => {
                 const terminal = new Terminal({
-                    theme: {background: "${options.backgroundColor}"},
+                    theme: ${JSON.stringify(colorScheme)},
                     fontFamily: "${options.fontFamily}",
                     rows: ${terminalRows},
                     cols: ${terminalColumns},
