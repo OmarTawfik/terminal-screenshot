@@ -1,6 +1,7 @@
 import {mkdirp, writeFile} from "fs-extra";
 import os from "os";
 import path from "path";
+import {ITheme} from "xterm";
 import {TerminalScreenshotOptions} from "./options";
 
 export async function generateTemplate(options: TerminalScreenshotOptions): Promise<string> {
@@ -8,7 +9,19 @@ export async function generateTemplate(options: TerminalScreenshotOptions): Prom
   const terminalRows = lines.length;
   const terminalColumns = Math.max(...lines.map(measureLength));
 
-  const theme = options.theme ? options.theme : {background: options.backgroundColor};
+  let colorScheme: ITheme = {};
+  if (options.colorScheme) {
+    try {
+      colorScheme = path.isAbsolute(options.colorScheme.toString())
+        ? require(options.colorScheme.toString())
+        : require(path.resolve(options.colorScheme.toString()));
+    } catch (error) {
+      throw new Error(`Failed to load colorScheme from ${options.colorScheme}: ${(error as Error).message}`);
+    }
+  } else {
+    colorScheme = {background: options.backgroundColor};
+  }
+
   const template = `
     <!DOCTYPE html>
     <html>
@@ -39,7 +52,7 @@ export async function generateTemplate(options: TerminalScreenshotOptions): Prom
         <script>
             document.fonts.load('1rem "${options.fontFamily}"').then(() => {
                 const terminal = new Terminal({
-                    theme: ${JSON.stringify(theme)},
+                    theme: ${JSON.stringify(colorScheme)},
                     fontFamily: "${options.fontFamily}",
                     rows: ${terminalRows},
                     cols: ${terminalColumns},

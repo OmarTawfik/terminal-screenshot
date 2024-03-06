@@ -67,12 +67,11 @@ brightWhite: "#ffffff",
 
 ```diff
 import {renderScreenshot} from "terminal-screenshot";
-+import ayu from "./theme";
 
 const image = await renderScreenshot({
   data: "[[DATA]]", // Data to be render to the terminal.
   // … other options
-+  theme: ayu,
++  colorScheme: path.resolve(__dirname, '/path/to/color-scheme.js'),
 });
 
 ````
@@ -100,7 +99,7 @@ terminal-screenshot --help
 -f --font-family [string]         Font family to use in terminal output. (default: Monaco)
 -b --background-color [css-color] Background color of the terminal. (default: black)
 -t --type [png|jpeg]              Type of the screenshot to be generated. (default: png)
--c --color-scheme [string]        Color scheme of the terminal, i.e. theme. (default: Tomorrow_Night)
+-c --color-scheme [string]        Path to color scheme defintion (see https://xtermjs.org/docs/api/terminal/interfaces/itheme/)
 -o --output [path]                Output path to save the screenshot to.
 -h --help                         Display usage help.
 ```

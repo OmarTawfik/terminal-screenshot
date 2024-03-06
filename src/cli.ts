@@ -7,7 +7,9 @@ import {renderScreenshot} from "./index";
 const options = new Command("terminal-screenshot")
   .description("Render terminal ANSI output into images!")
   .option("-b --background-color [css-color]", "Background color of the terminal. (default: black)")
-  .option("-c --color-scheme [string]        Color scheme of the terminal, i.e. theme. (default: '')")
+  .option(
+    "-c --color-scheme [string]        Path to color scheme defintion (see https://xtermjs.org/docs/api/terminal/interfaces/itheme/)",
+  )
   .option("-d --data [string]", "Data to be render to the terminal.")
   .option("-f --font-family [string]", "Font family to use in terminal output. (default: Monaco)")
   .option("-m --margin [number]", "Margin to leave around the terminal area in pixels. (default: 0)")
@@ -33,7 +35,7 @@ const options = new Command("terminal-screenshot")
       fontFamily: options.fontFamily,
       backgroundColor: options.backgroundColor,
       type: options.type,
-      theme: options.theme,
+      colorScheme: options.colorScheme,
     });
 
     await writeFile(options.output, buffer);

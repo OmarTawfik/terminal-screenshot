@@ -9,7 +9,7 @@ defineTest("maximum margin", {data: "test", margin: 10000000}, `"margin" must be
 
 defineTest("invalid type", {data: "test", type: "foo"}, `"type" must be one of [png, jpeg]`);
 
-defineTest("invalid type", {data: "test", theme: ""}, `"theme" must be of type object`);
+defineTest("invalid type", {data: "test", colorScheme: {}}, `"colorScheme" must be a string`);
 
 function defineTest(id: string, object: unknown, error: string): void {
   it("validates " + id, async () => {

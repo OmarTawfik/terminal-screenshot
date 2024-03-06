@@ -4,7 +4,6 @@ import os from "os";
 import path from "path";
 import {renderScreenshot} from "../src/index";
 import {TerminalScreenshotOptions} from "../src/options";
-import ayu from "./ayu-theme";
 
 const colors = new chalk.Instance({
   // full color support
@@ -41,9 +40,23 @@ function dark(...parts: string[]): string {
   return colors.bgHex("#000").hex("#FFF")(parts.join(""));
 }
 
-defineTest("theme", {
-  data: colors.cyan("INFO:") + colors.gray(" using a light theme!"),
-  theme: ayu,
+defineTest("colorScheme: dark", {
+  data: colors.cyan("INFO:") + colors.gray(" using a light color scheme!"),
+  colorScheme: path.resolve(__dirname, "./ayu.json"),
+});
+
+defineTest("colorScheme: light", {
+  data: colors.cyan("INFO:") + colors.gray(" using a light color scheme!"),
+  colorScheme: path.resolve(__dirname, "./tomorrow.json"),
+});
+
+it.concurrent("missing colorScheme file", async () => {
+  await expect(
+    renderScreenshot({
+      data: "foo",
+      colorScheme: path.resolve(__dirname, "./missing-colorScheme.json"),
+    }),
+  ).rejects.toThrow(/Failed to load colorScheme from/);
 });
 
 function defineTest(id: string, options: Partial<TerminalScreenshotOptions>): void {
